@@ -14,7 +14,7 @@ label.d span{opacity:.45;text-decoration:line-through}
 .learn{margin-top:8px;font-size:12px;color:#F5E6C8cc;background:#2D4A3E55;border-radius:8px;padding:8px}
 .box{background:var(--card);border:1px solid #C9A84C44;border-radius:12px;padding:14px;margin:14px 0;font-size:13px}
 .box li{margin:4px 0}button{background:var(--green);color:var(--gl);border:1px solid #C9A84C66;border-radius:8px;padding:6px 10px;margin-top:8px;font:inherit;font-size:12px}
-</style></head><body>
+.minline{font-size:12px;padding:6px 8px;border-radius:8px;background:#2D4A3E55;margin-bottom:6px}.minline.ok{background:#C9A84C33;color:#E4C977}input[type=number]{width:90px;background:#14100a;color:#F5E6C8;border:1px solid #C9A84C44;border-radius:6px;padding:4px}table{width:100%;border-collapse:collapse}td{padding:4px 6px}</style></head><body>
 <div class="tag">TheCuratorsDesk · Content</div><h1>Content Calendar · Nov 16 – Jan 3</h1>
 <div class="sub">Faceless · 3–4 hrs/week · TikTok slides, Pinterest, Instagram · Goal: learn what works. Tick tasks as you go; ticks save on this device.</div>
 <div class="box"><b>Weekly rhythm (about 3.5 hrs)</b><ul>
@@ -24,6 +24,7 @@ label.d span{opacity:.45;text-decoration:line-through}
 <li><b>Sunday, 15 min:</b> fill in the learning line at the bottom of the week.</li></ul>
 <b>Link rule:</b> TikTok Website field is unavailable, so end every slide post with "curatorsdesk.com" as text. Pins link to the product page. Instagram bio carries the store link.<br>
 <b>The test:</b> every week mixes the same three post types (scholar, Latin, educational/product). Note which gets the most saves and shares, then double down in January.</div>
+<div class="box"><b>Test tally (running totals)</b><div class="sub">Each Sunday, add that week's saves and shares per post type. On Jan 3, the type with the highest saves per post wins.</div><table id="tally"></table><div id="tsum" class="sub"></div></div>
 <div id="app"></div>
 <div class="box"><b>Before the trip (Mar 1 – Apr 10)</b><ul>
 <li><b>Jan:</b> Curiosity blog (one post for all eight volumes) after the Vol I–II proofs — week of Jan 25.</li>
@@ -39,45 +40,21 @@ label.d span{opacity:.45;text-decoration:line-through}
 <button onclick="resetAll()">Reset all ticks</button></div>
 <script>
 const T="TikTok",P="Pinterest",I="Instagram";
-const WEEKS=[
-{w:25,s:"2026-11-16",d:"Nov 16–22",f:"Get found. Establish the 3-post rhythm.",t:[
-[T,"Scholar slide: Frederick Douglass (learned to read in secret)"],[T,"Latin slide: Lux et Veritas"],[T,"Educational: the notebook that built the modern world (commonplace books)"],
-["Blog","Write + publish: Idea Capture Journal blog (live product, research anchor in your notes)"],[P,"Pin: Commonplace Book hero photo, keywords 'commonplace book' + 'literary gift'"],[P,"Pin: Lux et Veritas quote graphic"],[I,"Repost the Douglass slide + domain in the caption"]],
-l:"Record: TikTok views per post, saves, Pinterest impressions."},
-{w:26,s:"2026-11-23",d:"Nov 23–29",f:"Black Friday week. Keep it quiet and honest, not salesy.",t:[
-[T,"Scholar slide: G.K. Chesterton"],[T,"Black Friday post (Fri Nov 27): what's on offer, domain on last slide"],[T,"Educational: why the hardest books are worth reading slowly"],
-[P,"Pin: Black Friday offer graphic"],[P,"Pin: Advent Reading Calendar preview (digital + physical)"],[I,"Black Friday post + story"]],
-l:"Record: Black Friday post saves, store sessions Nov 23–29."},
-{w:27,s:"2026-11-30",d:"Nov 30 – Dec 6",f:"Advent begins Dec 1. Lead with the Advent Calendar.",t:[
-[T,"Advent Calendar product slide: 'Read your way to Christmas' (Dec 1)"],[T,"Scholar slide: Isaac Newton"],[T,"Latin slide: Fiat Lux"],
-["Blog","Write + publish: Self-Reflection Journal blog"],[P,"Pin: Advent Calendar, keyword 'advent reading calendar'"],[P,"Pin: Fiat Lux quote graphic"],[I,"Advent slide + story with domain"]],
-l:"Record: Advent post vs scholar post: which got more saves?"},
-{w:28,s:"2026-12-07",d:"Dec 7–13",f:"Gift week. Mention the Dec 12 physical-order cutoff.",t:[
-[T,"Educational: the five-minute habit after reading"],[T,"Gift slide 1: gifts for the reader who has everything (physical order cutoff Dec 12)"],[T,"Latin slide: Verba Volant Scripta Manent"],
-[P,"Pin: gift guide for book lovers"],[P,"Pin: Commonplace Book as a gift"],[I,"Gift slide + reminder of the Dec 12 cutoff"]],
-l:"Record: which of the three types had the most saves so far?"},
-{w:29,s:"2026-12-14",d:"Dec 14–20",f:"Last shipping window, then digital gifts. O Antiphons start Dec 17.",t:[
-[T,"Gift slide 2: last-minute digital gifts (instant download)"],[T,"Advent O Antiphons slide (Dec 17)"],[T,"Educational: what it means to read a book twice"],
-["Blog","Write + publish: one blog covering all language journals (Hebrew, Koine Greek, Old English)"],[P,"Pin: digital Advent Calendar, instant download"],[P,"Pin: O Antiphons quote graphic"],[I,"O Antiphons slide"]],
-l:"Record: store sessions and orders this week."},
-{w:30,s:"2026-12-21",d:"Dec 21–27",f:"Light week. Christmas. 2 posts only, rest is allowed.",t:[
-[T,"Advent: ERO CRAS slide (Dec 23)"],[T,"Latin slide: Nusquam Est Qui Ubique Est"],
-[P,"Pin: Christmas quote graphic with Soli Deo Gloria"],[I,"Christmas greeting post"]],
-l:"Record: nothing required. Rest."},
-{w:31,s:"2026-12-28",d:"Dec 28 – Jan 3",f:"Year-end review + New Year reading resolutions.",t:[
-[T,"Educational: what serious reading looks like"],[T,"New Year reading resolution slide (reading journal / Annual Reading Planner)"],[T,"Recap: the year in books"],
-["Blog","Write + publish: Annotator's Journal blog (proof approved week 29)"],[P,"Pin: reading resolutions graphic"],[P,"Pin: Annual Reading Planner"],[I,"New Year post"]],
-l:"Record: totals for all 7 weeks. Which format won? Write it here → ________"}
-];
+const WEEKS=[{"w":25,"s":"2026-11-16","d":"Nov 16–22","f":"Get found. Establish the 3-post rhythm.","t":[["TikTok","Scholar slide: Frederick Douglass (learned to read in secret)",true],["TikTok","Latin slide: Lux et Veritas",true],["TikTok","Educational: the notebook that built the modern world (commonplace books)",false],["Blog","Write + publish: Idea Capture Journal blog (live product, research anchor in your notes)",false],["Pinterest","Pin: Commonplace Book hero photo, keywords 'commonplace book' + 'literary gift' → link: product page (keyword product pin)",true],["Pinterest","Pin: Lux et Veritas quote graphic → link: matching Marginalia post",false],["Instagram","Repost the Douglass slide + domain in the caption",false],["Site","Improve one product page: description + image alt text for Scholar’s Commonplace Book",true]]},{"w":26,"s":"2026-11-23","d":"Nov 23–29","f":"Black Friday week. Keep it quiet and honest, not salesy.","t":[["TikTok","Scholar slide: G.K. Chesterton",true],["TikTok","Black Friday post (Fri Nov 27): what's on offer, domain on last slide",true],["TikTok","Educational: why the hardest books are worth reading slowly",false],["Pinterest","Pin: Black Friday offer graphic → link: product page (keyword product pin)",true],["Pinterest","Pin: Advent Reading Calendar preview (digital + physical) → link: product page (keyword product pin)",false],["Site","Improve one product page: description + image alt text for Classicist’s Companion",true]]},{"w":27,"s":"2026-11-30","d":"Nov 30 – Dec 6","f":"Advent begins Dec 1. Lead with the Advent Calendar.","t":[["TikTok","Advent Calendar product slide: 'Read your way to Christmas' (Dec 1)",true],["TikTok","Scholar slide: Isaac Newton",true],["TikTok","Latin slide: Fiat Lux",false],["Blog","Write + publish: Self-Reflection Journal blog",false],["Pinterest","Pin: Advent Calendar, keyword 'advent reading calendar' → link: product page (keyword product pin)",true],["Pinterest","Pin: Fiat Lux quote graphic → link: matching Marginalia post",false],["Instagram","Advent slide + story with domain",false],["Site","Improve one product page: description + image alt text for Advent Reading Calendar",true]]},{"w":28,"s":"2026-12-07","d":"Dec 7–13","f":"Gift week. Mention the Dec 12 physical-order cutoff.","t":[["TikTok","Educational: the five-minute habit after reading",true],["TikTok","Gift slide 1: gifts for the reader who has everything (physical order cutoff Dec 12)",true],["TikTok","Latin slide: Verba Volant Scripta Manent",false],["Pinterest","Pin: gift guide for book lovers → link: product page (keyword product pin)",true],["Pinterest","Pin: Commonplace Book as a gift → link: product page (keyword product pin)",false],["Site","Improve one product page: description + image alt text for Daily Reading Log",true],["Check","Mid-point check (by Dec 13): Shopify sessions by source, Pinterest outbound clicks (currently 0), saves by post type so far. Decide what to change for the last 3 weeks.",true]]},{"w":29,"s":"2026-12-14","d":"Dec 14–20","f":"Last shipping window, then digital gifts. O Antiphons start Dec 17.","t":[["TikTok","Gift slide 2: last-minute digital gifts (instant download)",true],["TikTok","Advent O Antiphons slide (Dec 17)",true],["TikTok","Educational: what it means to read a book twice",false],["Blog","Write + publish: one blog covering all language journals (Hebrew, Koine Greek, Old English)",false],["Pinterest","Pin: digital Advent Calendar, instant download → link: product page (keyword product pin)",true],["Pinterest","Pin: O Antiphons quote graphic → link: matching Marginalia post",false],["Instagram","O Antiphons slide",false],["Site","Improve one product page: description + image alt text for language journals (Hebrew, Koine Greek, Old English; fix the Hebrew URL)",true]]},{"w":30,"s":"2026-12-21","d":"Dec 21–27","f":"Light week. Christmas. 2 posts only, rest is allowed.","t":[["TikTok","Advent: ERO CRAS slide (Dec 23)",true],["TikTok","Latin slide: Nusquam Est Qui Ubique Est",true],["Pinterest","Pin: Christmas gift keyword pin (Commonplace Book) with a Soli Deo Gloria line → link: product page (keyword product pin)",true],["Site","Improve one product page: description + image alt text for Morning Reflection Journal",true]]},{"w":31,"s":"2026-12-28","d":"Dec 28 – Jan 3","f":"Year-end review + New Year reading resolutions.","t":[["TikTok","Educational: what serious reading looks like",true],["TikTok","New Year reading resolution slide (reading journal / Annual Reading Planner)",true],["TikTok","Recap: the year in books",false],["Blog","Write + publish: Annotator's Journal blog (proof approved week 29)",false],["Pinterest","Pin: reading resolutions graphic → link: product page (keyword product pin)",true],["Pinterest","Pin: Annual Reading Planner → link: product page (keyword product pin)",false],["Instagram","New Year post",false],["Site","Improve one product page: description + image alt text for Annotator’s Journal Single Study",true],["Check","Jan 3 comparison: add up saves and shares by post type across all 7 weeks (use the tally box) and pick the winning format.",true]]}];
 function ls(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
-let st=ls("tcd_content_cal1",{});
-function save(){try{localStorage.setItem("tcd_content_cal1",JSON.stringify(st))}catch(e){}}
+let st=ls("tcd_content_cal2",ls("tcd_content_cal1",{})),tl=ls("tcd_tally1",{});
+function save(){try{localStorage.setItem("tcd_content_cal2",JSON.stringify(st));localStorage.setItem("tcd_tally1",JSON.stringify(tl))}catch(e){}}
 function cw(){const n=new Date(),a=new Date(2026,10,16),w=Math.floor((n-a)/6048e5);return 25+w}
-function draw(){const c=cw();document.getElementById("app").innerHTML=WEEKS.map(x=>`<div class="wk ${x.w===c?"cur":""}"><span class="tag">Week ${x.w} · ${x.d}${x.w===c?" · This week":""}</span>
-<div class="focus">${x.f}</div>${x.t.map((r,i)=>{const k=x.w+"-"+i;return `<label class="${st[k]?"d":""}"><input type="checkbox" ${st[k]?"checked":""} onchange="tog('${k}')"><div><span class="ch">${r[0]}</span><span>${r[1]}</span></div></label>`}).join("")}
-<div class="learn">📝 ${x.l}</div><button onclick="doneW(${x.w})">Mark whole week done</button></div>`).join("")}
+const TYPES=["Scholar","Latin","Educational","Product"];
+function draw(){const c=cw();document.getElementById("app").innerHTML=WEEKS.map(x=>{
+ const core=x.t.map((r,i)=>[r,i]).filter(a=>a[0][2]);const cd=core.filter(a=>st[x.w+"-"+a[1]]).length;
+ const pass=cd===core.length;
+ const rows=x.t.map((r,i)=>{const k=x.w+"-"+i;return '<label class="'+(st[k]?"d":"")+'"><input type="checkbox" '+(st[k]?"checked":"")+' onchange="tog(\''+k+'\')"><div><span class="ch">'+(r[2]?"★ ":"")+r[0]+'</span><span>'+r[1]+'</span></div></label>'}).join("");
+ return '<div class="wk '+(x.w===c?"cur":"")+'"><span class="tag">Week '+x.w+' · '+x.d+(x.w===c?" · This week":"")+'</span><div class="focus">'+x.f+'</div><div class="minline '+(pass?"ok":"")+'">'+(pass?"✓ Minimum week done — this week counts":"Minimum week: do the ★ tasks ("+cd+"/"+core.length+"). The rest is bonus.")+'</div>'+rows+'<button onclick="doneW('+x.w+')">Mark whole week done</button></div>'}).join("");
+ document.getElementById("tally").innerHTML=TYPES.map(t=>'<tr><td>'+t+'</td><td><input type="number" min="0" value="'+(tl[t+"-s"]||"")+'" onchange="tl[\''+t+'-s\']=+this.value;save();sum()" placeholder="saves"></td><td><input type="number" min="0" value="'+(tl[t+"-h"]||"")+'" onchange="tl[\''+t+'-h\']=+this.value;save();sum()" placeholder="shares"></td></tr>').join("");sum()}
+function sum(){const a=TYPES.reduce((s,t)=>s+(tl[t+"-s"]||0)+(tl[t+"-h"]||0),0);document.getElementById("tsum").textContent=a?"Total saves + shares so far: "+a:""}
 function tog(k){st[k]=!st[k];save();draw()}
 function doneW(w){WEEKS.find(x=>x.w===w).t.forEach((_,i)=>st[w+"-"+i]=true);save();draw()}
-function resetAll(){if(confirm("Clear all ticks?")){st={};save();draw()}}
+function resetAll(){if(confirm("Clear all ticks?")){st={};tl={};save();draw()}}
 draw();
 </script></body></html>
